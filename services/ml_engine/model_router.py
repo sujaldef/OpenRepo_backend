@@ -30,7 +30,7 @@ class ModelRouter:
             "c": self._load_pt_model("c_model.pt"),
         }
         
-        # Fallback generic model for unsupported languages
+        # Fallback generic model for  unsupported languages
         self.generic_model = IssueModel()
         
         print("✓ ModelRouter initialized")
