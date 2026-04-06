@@ -140,10 +140,13 @@ def run_full_analysis(repo_id: str):
         # --------------------------------
         # --------------------------------
 # Save AI Prediction Report (NEW STRUCTURE)
-# -------------------------------
+# --------------------------------
         prediction_reports.insert_one({
     "repo_id": repo_id,
+    # LLM AI Predictions
     **results.get("prediction_report", {}),
+    # Raw file risk data for frontendRiskHotspots component
+    "top_risky_files": top_risky_files,
     "supporting_stats": {
         "repo_risk_score": results.get("repo_risk_score"),
         "structure_score": results.get("structure_score"),

@@ -3,13 +3,19 @@ import os
 from .file_static_analyzer import run_static_analysis
 from .dependency_audit import analyze_dependencies
 from .duplication_analysis import compute_duplication_ratio
-from services.ml_engine.issue_model_inference import IssueModel
+from services.ml_engine.model_router import get_model_router
 
 
-# Load model once (important)
-issue_model = IssueModel()
+# Load model router once (important) - routes to language-specific models
+model_router = get_model_router()
 
-
+SUPPORTED_EXTENSIONS = (
+    ".py",
+    ".js", ".ts", ".jsx", ".tsx",
+    ".c", ".cpp", ".h", ".hpp", ".cc", ".cxx",
+    ".java",
+    ".go"
+)
 EXCLUDED_DIRS = {
     "node_modules",
     ".git",
@@ -21,7 +27,21 @@ EXCLUDED_DIRS = {
 }
 
 MAX_FILE_SIZE = 500_000  # bytes
+def detect_language(filename):
+    ext = os.path.splitext(filename)[1].lower()
 
+    if ext == ".py":
+        return "python"
+    elif ext in [".js", ".jsx", ".ts", ".tsx"]:
+        return "javascript"
+    elif ext in [".c", ".cpp", ".h", ".hpp", ".cc", ".cxx"]:
+        return "c"
+    elif ext == ".java":
+        return "java"
+    elif ext == ".go":
+        return "go"
+    else:
+        return "unknown"
 
 def analyze_repo(repo_path: str):
     """
@@ -50,8 +70,13 @@ def analyze_repo(repo_path: str):
             if filename.endswith(".min.js"):
                 continue
 
-            if not filename.lower().endswith((".py", ".js", ".ts", ".jsx", ".tsx")):
+            if not filename.lower().endswith(SUPPORTED_EXTENSIONS):
                 continue
+
+            # ───────────────────────────────────────────────
+            # DETECT LANGUAGE
+            # ───────────────────────────────────────────────
+            language = detect_language(filename)
 
             full_path = os.path.join(root, filename)
 
@@ -75,6 +100,7 @@ def analyze_repo(repo_path: str):
             static_result["metrics"]["dependency_risk_score"] = dep_score
 
             static_result["file_path"] = os.path.relpath(full_path, repo_path)
+            static_result["language"] = language
 
             # ───────────────────────────────────────────────
             # 🔥 APPLY ISSUE ML MODEL HERE
@@ -83,16 +109,33 @@ def analyze_repo(repo_path: str):
 
             for issue in static_result["issues"]:
                 try:
+                    # ───────────────────────────────────────────────
+                    # IMPROVED ML INPUT WITH LANGUAGE & METRICS
+                    # ───────────────────────────────────────────────
                     text_input = f"""
+Language: {language}
 Issue Type: {issue.get("type", "")}
 Severity: {issue.get("severity", "")}
 Message: {issue.get("message", "")}
-File Complexity: {static_result["metrics"].get("cyclomatic_complexity", 0)}
-Duplication: {static_result["metrics"].get("duplication_ratio", 0)}
-LOC: {static_result["metrics"].get("loc", 0)}
+
+Code Metrics:
+- Cyclomatic Complexity: {static_result["metrics"].get("cyclomatic_complexity", 0)}
+- Duplication Ratio: {static_result["metrics"].get("duplication_ratio", 0)}
+- Lines of Code: {static_result["metrics"].get("loc", 0)}
+- Functions: {static_result["metrics"].get("function_count", 0)}
 """
 
-                    prediction = issue_model.predict(text_input)
+                    # ───────────────────────────────────────────────
+                    # 🔥 USE LANGUAGE-SPECIFIC MODEL ROUTING
+                    # ───────────────────────────────────────────────
+                    model = model_router.get_model(filename)
+                    prediction = model.predict(text_input)
+
+                    # ───────────────────────────────────────────────
+                    # CONFIDENCE THRESHOLD CHECK
+                    # ───────────────────────────────────────────────
+                    if prediction.get("confidence", 0) < 0.6:
+                        prediction["flag"] = "low_confidence"
 
                     issue["ml_analysis"] = prediction
 

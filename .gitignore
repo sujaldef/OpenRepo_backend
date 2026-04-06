@@ -5,26 +5,113 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.Python
 venv/
-.env
+ENV/
+env/
+.venv
 
 # =========================
-# ML Models
+# Environment & Secrets
+# =========================
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+*.pfx
+secrets.json
+
+# =========================
+# IDE & Editors
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-*
+.DS_Store
+Thumbs.db
+*.code-workspace
+
+# =========================
+# Large Datasets (> 50MB)
+# =========================
+# CSV files
+*.csv
+ml_training/datasets/
+ml_training/raw_datasets/
+ml_training/saved_models/
+
+# Parquet, pickle, numpy
+*.parquet
+*.pkl
+*.pickle
+*.npy
+*.npz
+*.h5
+*.pb
+*.onnx
+
+# =========================
+# Specific Large Files
+# =========================
+issue_dataset.csv
+mern_dataset.csv
+clang_dataset.csv
+*.json.gz
+trainBIGVUL.parquet
+dataset.json
+
+# =========================
+# Model Weights & Checkpoints
 # =========================
 *.pt
 *.pth
 *.ckpt
-openrepo_backend/ml_training/saved_models/
+*.weights
+*.bin
+*.safetensors
 
 # =========================
-# Node
+# Cache & Logs
 # =========================
-node_modules/
-dist/
-build/
+*.log
+*.log.*
+.cache/
+*.cache
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+*.tmp
 
 # =========================
-# OS
+# OS Generated Files
 # =========================
 .DS_Store
-Thumbs.db
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# =========================
+# Node (Frontend in root)
+# =========================
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# =========================
+# Database
+# =========================
+*.db
+*.sqlite
+*.sqlite3
+mongo.log
