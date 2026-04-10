@@ -14,13 +14,16 @@ Utility modules provide common functions used across the application: authentica
 ## 📁 Files
 
 ### `auth_dependency.py`
+
 FastAPI dependency for route protection and authentication.
+
 - Extracts JWT token from request headers
 - Validates token authenticity
 - Returns current user
 - Used with `Depends()` in routes
 
 **Usage:**
+
 ```python
 @router.get("/profile")
 async def get_profile(current_user = Depends(get_current_user)):
@@ -28,13 +31,16 @@ async def get_profile(current_user = Depends(get_current_user)):
 ```
 
 ### `jwt_handler.py`
+
 JWT token creation, validation, and management.
+
 - Encodes user data into JWT tokens
 - Decodes and validates tokens
 - Handles token expiration
 - Secret key management
 
 **Exports:**
+
 - `encode_token(user_id)` - Create JWT
 - `decode_token(token)` - Validate & extract user_id
 - Token expiry: (configurable, typically 24-48 hours)
@@ -109,6 +115,7 @@ User object passed to route handler
 ## 📋 Configuration
 
 ### `.env` (create if missing)
+
 ```
 JWT_SECRET=your_secret_key_here_change_in_production
 JWT_ALGORITHM=HS256
@@ -120,11 +127,13 @@ JWT_EXPIRY_HOURS=48
 ## ⚖️ Token Structure
 
 JWT tokens contain (don't decode client-side):
+
 - **Header**: Algorithm, token type
 - **Payload**: User ID, issued-at, expiry
 - **Signature**: HMAC-SHA256 signature
 
 Example decoded payload:
+
 ```json
 {
   "user_id": "507f1f77bcf86cd799439011",
@@ -138,6 +147,7 @@ Example decoded payload:
 ## 🚫 Error Handling
 
 Routes return:
+
 - `401 Unauthorized` - Missing/invalid JWT
 - `403 Forbidden` - Token expired
 - `400 Bad Request` - Malformed token
@@ -147,12 +157,14 @@ Routes return:
 ## 📝 Best Practices
 
 ✅ **Do:**
+
 - Store JWT in secure HTTP-only cookies
 - Validate token expiry
 - Use HTTPS in production
 - Refresh tokens periodically
 
 ❌ **Don't:**
+
 - Store sensitive data in JWT payload
 - Share JWT secrets
 - Use weak secret keys

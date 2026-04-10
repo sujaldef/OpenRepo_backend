@@ -14,7 +14,9 @@ Models define database schemas and data structures using **Pydantic** and **Mong
 ## 📁 Files
 
 ### `user_model.py`
+
 Represents user accounts with authentication & profile data.
+
 - `username` - Unique user identifier
 - `email` - Contact email
 - `password` - Hashed password
@@ -22,7 +24,9 @@ Represents user accounts with authentication & profile data.
 - `avatar` - Profile picture URL
 
 ### `repo_model.py`
+
 Repository metadata and analysis status.
+
 - `name` - Repository name
 - `url` - Repository URL
 - `owner_id` - Creator user ID
@@ -31,7 +35,9 @@ Repository metadata and analysis status.
 - `score` - Overall quality score
 
 ### `error_model.py`
+
 Detected issues, bugs, and security problems.
+
 - `file_path` - Path to file with issue
 - `line_number` - Line number
 - `severity` - Critical, Error, Warning
@@ -39,7 +45,9 @@ Detected issues, bugs, and security problems.
 - `issue_type` - Category (Security, Logic, Style)
 
 ### `prediction_model.py`
+
 ML model predictions for vulnerability detection.
+
 - `file_path` - Affected file
 - `prediction` - Predicted issue type
 - `confidence` - Confidence score (0-100)
@@ -47,7 +55,9 @@ ML model predictions for vulnerability detection.
 - `description` - Prediction rationale
 
 ### `recommendation_model.py`
+
 Improvement suggestions with implementation guidance.
+
 - `title` - Recommendation title
 - `description` - Detailed suggestion
 - `priority` - Priority level (1-5)
@@ -55,7 +65,9 @@ Improvement suggestions with implementation guidance.
 - `impact_score` - Expected impact score
 
 ### `file_model.py`
+
 Individual file metadata for repositories.
+
 - `path` - File path in repo
 - `extension` - File type (.py, .js, etc.)
 - `language` - Programming language
@@ -63,7 +75,9 @@ Individual file metadata for repositories.
 - `complexity` - Cyclomatic complexity
 
 ### `summary_model.py`
+
 Aggregated analysis summary for repositories.
+
 - `total_issues` - Count of all issues
 - `critical_count` - Count of critical issues
 - `avg_severity` - Average severity score
@@ -89,6 +103,7 @@ User
 ## 🔐 Validation
 
 Models include:
+
 - Required field validation
 - Type checking
 - Field length constraints

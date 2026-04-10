@@ -46,52 +46,67 @@ services/
 ## 🔑 Key Services
 
 ### `analysis_service.py`
+
 Coordinates general code analysis workflows.
+
 - Kicks off analysis jobs
 - Aggregates results
 - Handles caching
 
 ### `full_analysis_service.py`
+
 End-to-end analysis orchestration for complete repository scan.
+
 - Runs all analysis components
 - Combines results into summary
 - Stores in database
 
 ### Core Analysis: `core_analysis/`
+
 **repo_analyzer.py** - Analyzes repository structure
+
 - Extracts file hierarchy
 - Calculates metrics per file
 - Identifies high-risk areas
 
 ### ML Engine: `ml_engine/`
+
 **repo_insight_engine.py** - Core ML inference
+
 - Loads trained models
 - Generates predictions
 - Scores risk levels
 
 **repo_risk_model.py** - Risk assessment
+
 - Calculates overall repo risk
 - Prioritizes issues
 - Generates scores
 
 **repo_llm_prediction_engine.py** - LLM-based predictions
+
 - Uses language models for vulnerability detection
 - Generates AI-powered insights
 - Returns confidence scores
 
 **repo_llm_recommendation_engine.py** - Smart recommendations
+
 - Generates actionable suggestions
 - Prioritizes by impact
 - Estimates effort/time
 
 ### Pipeline: `pipeline/`
+
 Specialized analysis workflows
+
 - **issue_pipeline.py** - Issue detection
 - **prediction_pipeline.py** - ML predictions
 - **recommendation_pipeline.py** - Recommendations
 
 ### Structure Analysis: `structure/`
+
 **structure_analyzer.py** - Repository organization analysis
+
 - Analyzes folder hierarchy
 - Identifies structure issues
 - Calculates complexity metrics
@@ -131,6 +146,7 @@ API Response
 ## 💾 Data Handling
 
 Services:
+
 - Accept raw repository data
 - Process and transform data
 - Call ML models for inference

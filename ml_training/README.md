@@ -32,21 +32,25 @@ ml_training/
 ### Training Scripts
 
 **train_issue_model.py** - Issue classification model
+
 - Trains model to categorize issues by type
 - Output: `issue_classifier.pkl`
 - Accuracy target: >85%
 
 **train_repo_model.py** - Repository-level analysis
+
 - Models overall repo characteristics
 - Output: `repo_model.pkl`
 - Predicts repo health metrics
 
 **train_risk_regressor.py** - Risk scoring model
+
 - Continuous risk score prediction (0-1)
 - Output: `risk_model.pkl`
 - Regression-based approach
 
 **train_structure_model.py** - Code structure assessment
+
 - Evaluates repository organization
 - Output: `structure_model.pkl`
 - Analyzes code layout patterns
@@ -54,29 +58,35 @@ ml_training/
 ### Dataset Builders
 
 **build_issue_dataset.py**
+
 - Collects and labels issue data
 - Output: `issue_dataset.csv`
 
 **build_repo_dataset.py**
+
 - Repository-level feature extraction
 - Output: `repo_dataset.csv`
 
 **build_structure_dataset.py**
+
 - Repository structure features
 - Output: `structure_dataset.csv`
 
 **build_mern_dataset.py** / **build_clang_dataset.py** / **build_python_dataset.py**
+
 - Language-specific datasets
 - Extracted from open-source repos
 
 ### Dataset Balancing
 
 **balance_mern_dataset.py** / **balance_python_dataset.py** / **balance_clang_dataset.py**
+
 - Handles class imbalance
 - Balances positive/negative samples
 - Output: `*_balanced.csv`
 
-**clean_*.py**
+**clean\_\*.py**
+
 - Data cleaning & preprocessing
 - Removes duplicates, outliers
 - Output: `*_cleaned.csv`
@@ -84,6 +94,7 @@ ml_training/
 ### Feature Engineering
 
 **feature_engineering.py**
+
 - Creates derived features
 - Normalizes inputs
 - Selects important features
@@ -92,16 +103,19 @@ ml_training/
 ### Analysis & Evaluation
 
 **analyze_dataset.py**
+
 - Exploratory data analysis
 - Statistics and distributions
 - Data quality checks
 
 **analyze_models.py**
+
 - Model performance comparison
 - Accuracy, precision, recall metrics
 - Identifies best models
 
 **evaluate_model.py**
+
 - Cross-validation
 - Test set evaluation
 - Performance benchmarking
@@ -111,25 +125,27 @@ ml_training/
 ## 📊 Datasets
 
 ### Issue Dataset
+
 - **Size**: ~105 MB
 - **Records**: 50,000+
 - **Labels**: Issue type (Critical, Error, Warning)
 - **Features**: File path, line number, code context
 
 ### Repository Datasets
+
 - **MERN**: JavaScript/Node.js repos
 - **Python**: Python projects
 - **C/Lang**: C/C++ codebases
 
 ### Processed Datasets
 
-| Dataset | Purpose | Records |
-|---------|---------|---------|
-| `issue_dataset.csv` | Issue classification | 50,000+ |
-| `repo_dataset.csv` | Repo-level analysis | 1,000+ |
-| `structure_dataset.csv` | Structure assessment | 5,000+ |
-| `*_cleaned.csv` | Quality-checked data | Varies |
-| `*_balanced.csv` | Class-balanced data | Varies |
+| Dataset                 | Purpose              | Records |
+| ----------------------- | -------------------- | ------- |
+| `issue_dataset.csv`     | Issue classification | 50,000+ |
+| `repo_dataset.csv`      | Repo-level analysis  | 1,000+  |
+| `structure_dataset.csv` | Structure assessment | 5,000+  |
+| `*_cleaned.csv`         | Quality-checked data | Varies  |
+| `*_balanced.csv`        | Class-balanced data  | Varies  |
 
 ---
 
@@ -138,7 +154,7 @@ ml_training/
 ```
 saved_models/
 ├── issue_classifier.pkl     # Issue type classification
-├── repo_model.pkl           # Repository analysis  
+├── repo_model.pkl           # Repository analysis
 ├── risk_model.pkl           # Risk scoring (regression)
 ├── structure_model.pkl      # Structure assessment
 └── folder_model.pkl         # Folder-level analysis
@@ -175,21 +191,25 @@ Production Inference (in services/)
 ## 🛠️ Usage
 
 ### Training a Model
+
 ```bash
 python train_issue_model.py
 ```
 
 ### Building Dataset
+
 ```bash
 python build_issue_dataset.py
 ```
 
 ### Balancing Data
+
 ```bash
 python dataset_balancing/balance_mern_dataset.py
 ```
 
 ### Evaluating Models
+
 ```bash
 python evaluate_model.py
 ```
@@ -199,6 +219,7 @@ python evaluate_model.py
 ## 📈 Performance Metrics
 
 Models target:
+
 - **Issue Classification**: 85%+ accuracy
 - **Risk Prediction**: R² > 0.75
 - **Structure Analysis**: 80%+ accuracy
@@ -208,6 +229,7 @@ Models target:
 ## ⚙️ Configuration
 
 Edit training scripts to adjust:
+
 - `test_size` - Train/test split ratio
 - `random_state` - Reproducibility seed
 - `features_to_use` - Feature selection
